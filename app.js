@@ -4,11 +4,15 @@ const app = express()
 const port = 3000
 
 app.use(function (req, res, next) {
-  let timeNow = new Date().toString()
+  let timeStart = new Date
   let reqMethod = req.method
   let reqUrl = req.originalUrl
 
-  console.log(`${timeNow} | ${reqMethod} from ${reqUrl}`)
+  res.on('finish', function () {
+    let timeEnd = new Date
+    let totalTime = timeEnd - timeStart
+    console.log(`${timeStart.toISOString()} | ${reqMethod} from ${reqUrl} | total time:${totalTime}(ms) `)
+  });
 
   next()
 });
